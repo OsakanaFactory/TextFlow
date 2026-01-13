@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Type, FileDiff, History as HistoryIcon, ArrowRight } from 'lucide-react'
+import AdBanner from '../components/common/AdBanner'
 
 export default function Home() {
   const { t } = useTranslation()
@@ -138,6 +139,10 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* Ad Section */}
+      <div className="max-w-4xl mx-auto px-4 pb-12">
+        <AdBanner />
+      </div>
     </div>
   )
 }

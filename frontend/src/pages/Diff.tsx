@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDiff } from '../hooks/useDiff'
 import { FileDiff, Split, Minimize2 } from 'lucide-react'
+import AdBanner from '../components/common/AdBanner'
 
 export default function Diff() {
   const { t } = useTranslation()
@@ -93,6 +94,9 @@ export default function Diff() {
            </div>
         </div>
       </div>
+      
+      {/* Ad Section */}
+      <AdBanner />
 
       {/* Result */}
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm overflow-hidden border border-gray-100 dark:border-gray-800">

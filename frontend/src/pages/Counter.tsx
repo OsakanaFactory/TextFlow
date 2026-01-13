@@ -4,6 +4,7 @@ import { useCharCount } from '../hooks/useCharCount'
 import { useAuth } from '../contexts/AuthContext'
 import { Copy, Save, Check, Type, AlignLeft, FileText, Hash, Eraser, Twitter, Instagram } from 'lucide-react'
 import api from '../services/api'
+import AdBanner from '../components/common/AdBanner'
 
 export default function Counter() {
   const { t } = useTranslation()
@@ -185,6 +186,9 @@ export default function Counter() {
               </div>
             </div>
           </div>
+
+          {/* Ad Section */}
+          <AdBanner className="mt-6" />
         </div>
       </div>
     </div>
