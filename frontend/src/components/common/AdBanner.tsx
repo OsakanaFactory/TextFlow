@@ -12,12 +12,16 @@ const AdBanner: React.FC<AdBannerProps> = ({ className = '' }) => {
   const adRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Only load if the ref is available and no script is already present
+    // Only load if the ref is available and no script/comment is already present
     if (adRef.current && adRef.current.childNodes.length === 0) {
-      const script = document.createElement('script');
-      script.src = 'https://adm.shinobi.jp/s/414cb18a2dff9ceb2715e0145ecd71c4';
-      script.async = true;
-      adRef.current.appendChild(script);
+      const adTag = `
+<!-- admax -->
+<script src="https://adm.shinobi.jp/s/414cb18a2dff9ceb2715e0145ecd71c4"></script>
+<!-- admax -->
+`;
+      const range = document.createRange();
+      const fragment = range.createContextualFragment(adTag.trim());
+      adRef.current.appendChild(fragment);
     }
   }, []);
 
