@@ -52,7 +52,6 @@ export default function Counter() {
   ]
 
   return (
-  return (
     <AdLayout>
       <div className="flex flex-col gap-6">
         
