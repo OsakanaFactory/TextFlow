@@ -29,7 +29,7 @@ const AdBanner: React.FC<AdBannerProps> = ({ className = '' }) => {
     <div 
       className={`flex justify-center my-8 min-h-[250px] w-full bg-slate-50/50 rounded-xl overflow-hidden border border-slate-100 items-center text-slate-400 text-sm relative ${className}`}
     >
-      <div ref={adRef} className="admax-container min-w-[200px] min-h-[50px] flex justify-center items-center" />
+      <div ref={adRef} className="admax-container min-w-[300px] min-h-[250px] flex justify-center items-center" />
       {/* Optional: Placeholder text while loading or if ad is blocked */}
       <div className="absolute -z-10 opacity-20">Advertisement</div>
     </div>
