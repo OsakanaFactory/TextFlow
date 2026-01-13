@@ -4,8 +4,8 @@ spring:
 
   # Database Configuration
   datasource:
-    url: jdbc:postgresql://localhost:5432/textflow
-    username: textflow
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/textflow}
+    username: ${DB_USERNAME:textflow}
     password: ${DB_PASSWORD:textflow_dev}
     driver-class-name: org.postgresql.Driver
 
