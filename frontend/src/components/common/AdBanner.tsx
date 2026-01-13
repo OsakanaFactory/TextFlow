@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 
 interface AdBannerProps {
   className?: string;
@@ -9,7 +9,6 @@ interface AdBannerProps {
  * This component dynamically loads the ad script provided by the user.
  */
 const AdBanner: React.FC<AdBannerProps> = ({ className = '' }) => {
-  const adRef = useRef<HTMLDivElement>(null);
 
   return (
     <div 
