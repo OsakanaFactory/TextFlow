@@ -1,0 +1,113 @@
+{
+  "common": {
+    "appName": "TextFlow",
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Sign Up",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "loading": "Loading..."
+  },
+  "nav": {
+    "counter": "Character Count",
+    "diff": "Diff Compare",
+    "history": "History"
+  },
+  "home": {
+    "hero": {
+      "title": "Text Processing Made Simple",
+      "subtitle": "Character count, diff comparison, and history management all in one platform.",
+      "cta": "Get Started",
+      "register": "Sign Up Free"
+    },
+    "features": {
+      "title": "Key Features",
+      "counter": {
+        "title": "Character Count",
+        "description": "Real-time counting of characters, lines, and bytes. Check SNS character limits too."
+      },
+      "diff": {
+        "title": "Diff Compare",
+        "description": "Compare two texts and visually display additions, deletions, and changes."
+      },
+      "history": {
+        "title": "History Management",
+        "description": "Auto-save your edited texts. Go back to previous versions anytime."
+      }
+    },
+    "cta": {
+      "title": "Try TextFlow Today",
+      "description": "Start using immediately without registration. Sign up to save unlimited history.",
+      "button": "Start Free"
+    }
+  },
+  "counter": {
+    "title": "Character Count",
+    "placeholder": "Enter your text here...",
+    "results": "Count Results",
+    "totalChars": "Total Characters",
+    "totalCharsWithoutSpace": "Without Spaces",
+    "bytes": "Bytes",
+    "lines": "Lines",
+    "words": "Words",
+    "paragraphs": "Paragraphs",
+    "manuscripts": "Manuscript Pages",
+    "snsCount": "SNS Character Count",
+    "chars": "chars",
+    "line": "lines",
+    "word": "words",
+    "paragraph": "paragraphs",
+    "pages": "pages",
+    "remaining": "remaining",
+    "exceeded": "exceeded",
+    "saved": "Saved!"
+  },
+  "diff": {
+    "title": "Diff Compare",
+    "text1": "Text 1",
+    "text2": "Text 2",
+    "placeholder1": "Enter original text...",
+    "placeholder2": "Enter modified text...",
+    "sideBySide": "Side by Side",
+    "unified": "Unified",
+    "stats": "Diff Statistics",
+    "result": "Comparison Result",
+    "added": "Added",
+    "deleted": "Deleted",
+    "total": "Total Changes",
+    "changeRate": "Change Rate",
+    "processing": "Processing..."
+  },
+  "history": {
+    "title": "History",
+    "noHistory": "No history found",
+    "guestNotice": "Guest mode allows up to 5 saved items.",
+    "registerCta": "Sign up for unlimited saves",
+    "startCounting": "Start Character Counting",
+    "deleteConfirm": "Delete this history?",
+    "guestLimit": "Guest mode allows up to 5 histories"
+  },
+  "auth": {
+    "loginTitle": "Login",
+    "registerTitle": "Create Account",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "username": "Username",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "loginError": "Login failed",
+    "registerError": "Registration failed",
+    "registerSuccess": "Registration complete. Please login.",
+    "passwordMismatch": "Passwords do not match",
+    "passwordTooShort": "Password must be at least 8 characters"
+  },
+  "footer": {
+    "howToUse": "How to Use",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  }
+}

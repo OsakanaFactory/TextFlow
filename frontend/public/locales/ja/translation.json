@@ -1,0 +1,113 @@
+{
+  "common": {
+    "appName": "TextFlow",
+    "login": "ログイン",
+    "logout": "ログアウト",
+    "register": "新規登録",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "copy": "コピー",
+    "copied": "コピーしました",
+    "loading": "読み込み中..."
+  },
+  "nav": {
+    "counter": "文字数カウント",
+    "diff": "差分比較",
+    "history": "履歴"
+  },
+  "home": {
+    "hero": {
+      "title": "テキスト処理を、もっとシンプルに",
+      "subtitle": "文字数カウント、差分比較、履歴管理を一つのプラットフォームで。",
+      "cta": "今すぐ始める",
+      "register": "無料で登録"
+    },
+    "features": {
+      "title": "主な機能",
+      "counter": {
+        "title": "文字数カウント",
+        "description": "リアルタイムで文字数、行数、バイト数をカウント。SNS投稿の文字数制限もチェックできます。"
+      },
+      "diff": {
+        "title": "差分比較",
+        "description": "2つのテキストを比較して、追加・削除・変更箇所を視覚的に表示します。"
+      },
+      "history": {
+        "title": "履歴管理",
+        "description": "編集したテキストを自動保存。過去のバージョンにいつでも戻れます。"
+      }
+    },
+    "cta": {
+      "title": "今すぐTextFlowを体験しよう",
+      "description": "登録不要ですぐに使えます。会員登録すると履歴を無制限に保存できます。",
+      "button": "無料で始める"
+    }
+  },
+  "counter": {
+    "title": "文字数カウント",
+    "placeholder": "テキストを入力してください...",
+    "results": "カウント結果",
+    "totalChars": "総文字数",
+    "totalCharsWithoutSpace": "空白なし",
+    "bytes": "バイト数",
+    "lines": "行数",
+    "words": "単語数",
+    "paragraphs": "段落数",
+    "manuscripts": "原稿用紙換算",
+    "snsCount": "SNS文字数",
+    "chars": "文字",
+    "line": "行",
+    "word": "語",
+    "paragraph": "段落",
+    "pages": "枚",
+    "remaining": "残り",
+    "exceeded": "超過",
+    "saved": "保存しました"
+  },
+  "diff": {
+    "title": "差分比較",
+    "text1": "テキスト1",
+    "text2": "テキスト2",
+    "placeholder1": "変更前のテキストを入力...",
+    "placeholder2": "変更後のテキストを入力...",
+    "sideBySide": "横並び表示",
+    "unified": "統合表示",
+    "stats": "差分統計",
+    "result": "比較結果",
+    "added": "追加",
+    "deleted": "削除",
+    "total": "合計変更",
+    "changeRate": "変更率",
+    "processing": "処理中..."
+  },
+  "history": {
+    "title": "履歴",
+    "noHistory": "履歴がありません",
+    "guestNotice": "ゲストモードでは最大5件まで保存できます。",
+    "registerCta": "無料登録で無制限に保存",
+    "startCounting": "文字数カウントを始める",
+    "deleteConfirm": "この履歴を削除しますか？",
+    "guestLimit": "ゲストモードでは5件まで保存できます"
+  },
+  "auth": {
+    "loginTitle": "ログイン",
+    "registerTitle": "アカウント作成",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "confirmPassword": "パスワード（確認）",
+    "username": "ユーザー名",
+    "noAccount": "アカウントをお持ちでない方",
+    "hasAccount": "既にアカウントをお持ちの方",
+    "loginError": "ログインに失敗しました",
+    "registerError": "登録に失敗しました",
+    "registerSuccess": "登録が完了しました。ログインしてください。",
+    "passwordMismatch": "パスワードが一致しません",
+    "passwordTooShort": "パスワードは8文字以上で入力してください"
+  },
+  "footer": {
+    "howToUse": "使い方",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約"
+  }
+}
