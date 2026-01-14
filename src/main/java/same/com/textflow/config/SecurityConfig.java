@@ -54,10 +54,12 @@ public class SecurityConfig {
                         // Public endpoints
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/count").permitAll()
+                        // OAuth2 endpoints
+                        .requestMatchers("/api/oauth2/**", "/login/oauth2/**").permitAll()
                         // Swagger/OpenAPI
                         .requestMatchers("/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                        // Static resources
-                        .requestMatchers("/", "/static/**", "/favicon.ico").permitAll()
+                        // Static resources & Error
+                        .requestMatchers("/", "/static/**", "/favicon.ico", "/error").permitAll()
                         // All other requests require authentication
                         .anyRequest().authenticated())
                 .oauth2Login(oauth2 -> oauth2

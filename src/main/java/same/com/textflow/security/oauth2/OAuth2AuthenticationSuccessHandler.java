@@ -12,9 +12,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import same.com.textflow.security.JwtTokenProvider;
 
 import java.io.IOException;
-import java.net.URI;
-import java.util.Arrays;
-import java.util.List;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 
 @Component
 @RequiredArgsConstructor
@@ -48,20 +47,5 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         return UriComponentsBuilder.fromUriString(targetUrl)
                 .queryParam("token", token)
                 .build().toUriString();
-    }
-
-    private boolean isAuthorizedRedirectUri(String uri) {
-        URI clientRedirectUri = URI.create(uri);
-        List<String> authorizedUris = Arrays.asList(authorizedRedirectUris.split(","));
-
-        return authorizedUris.stream()
-                .anyMatch(authorizedUri -> {
-                    URI authorizedURI = URI.create(authorizedUri);
-                    if (authorizedURI.getHost().equalsIgnoreCase(clientRedirectUri.getHost())
-                            && authorizedURI.getPort() == clientRedirectUri.getPort()) {
-                        return true;
-                    }
-                    return false;
-                });
     }
 }

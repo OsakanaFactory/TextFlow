@@ -19,9 +19,7 @@ import same.com.textflow.entity.User;
 import same.com.textflow.repository.TextHistoryRepository;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.*;
