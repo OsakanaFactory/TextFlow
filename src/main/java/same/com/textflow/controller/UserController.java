@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import same.com.textflow.dto.request.UserUpdateRequest;
 import same.com.textflow.dto.response.UserResponse;
 import same.com.textflow.service.UserService;
 
@@ -23,5 +24,21 @@ public class UserController {
     public ResponseEntity<UserResponse> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
         UserResponse response = userService.getCurrentUser(userDetails.getUsername());
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/me")
+    @Operation(summary = "ユーザー情報更新", description = "プロフィール情報を更新します")
+    public ResponseEntity<UserResponse> updateUser(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestBody UserUpdateRequest request) {
+        UserResponse response = userService.updateUser(userDetails.getUsername(), request);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/me")
+    @Operation(summary = "アカウント削除", description = "自身のアカウントを削除します")
+    public ResponseEntity<Void> deleteUser(@AuthenticationPrincipal UserDetails userDetails) {
+        userService.deleteUser(userDetails.getUsername());
+        return ResponseEntity.noContent().build();
     }
 }

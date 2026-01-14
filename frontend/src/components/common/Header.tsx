@@ -88,12 +88,15 @@ export default function Header() {
             <div className="pl-2 border-l border-gray-200 dark:border-gray-700 ml-2">
               {isAuthenticated ? (
                 <div className="flex items-center space-x-3">
-                   <div className="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300">
-                     <div className="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/50 flex items-center justify-center text-primary-700 dark:text-primary-400">
-                       <User size={16} />
-                     </div>
-                     <span className="font-medium hidden lg:inline">{user?.username}</span>
-                   </div>
+                  <Link
+                    to="/profile"
+                    className="flex items-center space-x-2 text-sm text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                  >
+                    <div className="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/50 flex items-center justify-center text-primary-700 dark:text-primary-400">
+                      <User size={16} />
+                    </div>
+                    <span className="font-medium hidden lg:inline">{user?.username}</span>
+                  </Link>
                   <button
                     onClick={logout}
                     className="p-2 rounded-full text-gray-400 hover:text-danger-500 hover:bg-danger-50 dark:hover:bg-danger-900/20 transition-colors"

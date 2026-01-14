@@ -7,6 +7,7 @@ import same.com.textflow.dto.response.UserResponse;
 import same.com.textflow.entity.User;
 import same.com.textflow.exception.ResourceNotFoundException;
 import same.com.textflow.repository.TextHistoryRepository;
+import same.com.textflow.dto.request.UserUpdateRequest;
 import same.com.textflow.repository.UserRepository;
 
 @Service
@@ -37,5 +38,21 @@ public class UserService {
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
+    }
+
+    @Transactional
+    public UserResponse updateUser(String email, UserUpdateRequest request) {
+        User user = getUserByEmail(email);
+        if (request.getUsername() != null) {
+            user.setUsername(request.getUsername());
+        }
+        user = userRepository.save(user);
+        return getCurrentUser(user.getEmail());
+    }
+
+    @Transactional
+    public void deleteUser(String email) {
+        User user = getUserByEmail(email);
+        userRepository.delete(user);
     }
 }

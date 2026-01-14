@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDiff } from '../hooks/useDiff'
-import { FileDiff, Split, Minimize2 } from 'lucide-react'
+import { FileDiff, Split, Minimize2, Upload } from 'lucide-react'
 import AdLayout from '../components/layout/AdLayout'
 import AdBanner from '../components/common/AdBanner'
 
@@ -12,6 +12,21 @@ export default function Diff() {
   const [viewMode, setViewMode] = useState<'side-by-side' | 'unified'>('side-by-side')
   
   const { diffs, stats } = useDiff(oldText, newText)
+  
+  const handleFileUpload = (setTargetText: (text: string) => void) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      const content = event.target?.result as string
+      if (content) {
+        setTargetText(content)
+      }
+    }
+    reader.readAsText(file)
+    e.target.value = ''
+  }
 
   return (
     <AdLayout>
@@ -50,9 +65,20 @@ export default function Diff() {
         {/* Input Area */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="space-y-2">
-                <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 ml-1">
-                    {t('diff.text1', '変更前')}
-                </label>
+                <div className="flex justify-between items-center ml-1">
+                    <label className="block text-sm font-bold text-slate-700 dark:text-slate-300">
+                        {t('diff.text1', '変更前')}
+                    </label>
+                    <label className="p-1.5 text-slate-500 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors cursor-pointer" title="Upload File">
+                        <Upload size={16} />
+                        <input
+                            type="file"
+                            accept=".txt,.md"
+                            className="hidden"
+                            onChange={handleFileUpload(setOldText)}
+                        />
+                    </label>
+                </div>
                 <textarea
                     value={oldText}
                     onChange={(e) => setOldText(e.target.value)}
@@ -61,9 +87,20 @@ export default function Diff() {
                 />
             </div>
             <div className="space-y-2">
-                <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 ml-1">
-                    {t('diff.text2', '変更後')}
-                </label>
+                <div className="flex justify-between items-center ml-1">
+                    <label className="block text-sm font-bold text-slate-700 dark:text-slate-300">
+                        {t('diff.text2', '変更後')}
+                    </label>
+                    <label className="p-1.5 text-slate-500 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-xl transition-colors cursor-pointer" title="Upload File">
+                        <Upload size={16} />
+                        <input
+                            type="file"
+                            accept=".txt,.md"
+                            className="hidden"
+                            onChange={handleFileUpload(setNewText)}
+                        />
+                    </label>
+                </div>
                 <textarea
                     value={newText}
                     onChange={(e) => setNewText(e.target.value)}

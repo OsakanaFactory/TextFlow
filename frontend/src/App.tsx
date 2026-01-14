@@ -7,6 +7,8 @@ import Diff from './pages/Diff'
 import History from './pages/History'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import OAuth2RedirectHandler from './pages/OAuth2RedirectHandler'
+import Profile from './pages/Profile'
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
           <Route path="/history" element={<History />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </main>
       <Footer />

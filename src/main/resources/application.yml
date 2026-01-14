@@ -37,6 +37,8 @@ app:
     expiration-ms: 3600000
   cors:
     allowed-origins: ${ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000}
+  oauth2:
+    authorized-redirect-uris: ${OAUTH2_REDIRECT_URIS:http://localhost:5173/oauth2/redirect,http://localhost:3000/oauth2/redirect}
 
 # Logging
 logging:

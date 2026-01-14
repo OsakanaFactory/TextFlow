@@ -25,11 +25,17 @@ public class User {
     @Column(nullable = false, unique = true, length = 50)
     private String username;
 
-    @Column(nullable = false, unique = true, length = 255)
+    @Column(unique = true, length = 255)
     private String email;
 
-    @Column(name = "password_hash", nullable = false)
+    @Column(name = "password_hash")
     private String passwordHash;
+
+    @Column(length = 20)
+    private String provider; // e.g., "google", "github"
+
+    @Column(name = "provider_id")
+    private String providerId;
 
     @Column(nullable = false, length = 20)
     @Builder.Default

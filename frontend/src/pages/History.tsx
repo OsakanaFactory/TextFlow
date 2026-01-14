@@ -1,13 +1,25 @@
+import { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocalHistory } from '../hooks/useLocalHistory'
 import { useAuth } from '../contexts/AuthContext'
 import { Link } from 'react-router-dom'
-import { History as HistoryIcon, Clock, Trash2, Copy, FileText, ArrowRight, BookOpen } from 'lucide-react'
+import { History as HistoryIcon, Clock, Trash2, Copy, FileText, ArrowRight, BookOpen, Search } from 'lucide-react'
 
 export default function History() {
   const { t } = useTranslation()
   const { histories, deleteHistory } = useLocalHistory()
   const { isAuthenticated } = useAuth()
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const filteredHistories = useMemo(() => {
+    if (!searchQuery.trim()) return histories
+    const query = searchQuery.toLowerCase()
+    return histories.filter(
+      (h) =>
+        h.title.toLowerCase().includes(query) ||
+        h.content.toLowerCase().includes(query)
+    )
+  }, [histories, searchQuery])
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
@@ -29,6 +41,20 @@ export default function History() {
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
             {t('history.title', '履歴')}
         </h1>
+      </div>
+
+      {/* Search Bar */}
+      <div className="relative mb-8">
+        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+          <Search size={20} />
+        </div>
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder={t('history.searchPlaceholder', '履歴を検索...')}
+          className="w-full pl-12 pr-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all font-medium text-gray-900 dark:text-white shadow-sm"
+        />
       </div>
 
       {!isAuthenticated && (
@@ -75,55 +101,61 @@ export default function History() {
         </div>
       ) : (
         <div className="grid gap-4">
-          {histories.map((history) => (
-            <div
-              key={history.id}
-              className="group bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-5 hover:shadow-md hover:border-primary-100 dark:hover:border-primary-900 transition-all duration-300"
-            >
-              <div className="flex justify-between items-start gap-4">
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-white truncate mb-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                    {history.title || 'Untitled'}
-                  </h3>
-                  <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400 mb-3">
-                     <span className="flex items-center gap-1">
-                        <Clock size={12} />
-                        {formatDate(history.createdAt)}
-                     </span>
-                     <span className="flex items-center gap-1 bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-full">
-                        <FileText size={12} />
-                        {history.charCount.toLocaleString()} {t('counter.chars', '文字')}
-                     </span>
+          {filteredHistories.length === 0 ? (
+             <div className="py-12 text-center text-gray-500">
+                検索結果が見つかりませんでした。
+             </div>
+          ) : (
+            filteredHistories.map((history) => (
+              <div
+                key={history.id}
+                className="group bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-5 hover:shadow-md hover:border-primary-100 dark:hover:border-primary-900 transition-all duration-300"
+              >
+                <div className="flex justify-between items-start gap-4">
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white truncate mb-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                      {history.title || 'Untitled'}
+                    </h3>
+                    <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400 mb-3">
+                       <span className="flex items-center gap-1">
+                          <Clock size={12} />
+                          {formatDate(history.createdAt)}
+                       </span>
+                       <span className="flex items-center gap-1 bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-full">
+                          <FileText size={12} />
+                          {history.charCount.toLocaleString()} {t('counter.chars', '文字')}
+                       </span>
+                    </div>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 leading-relaxed">
+                      {history.content}
+                    </p>
                   </div>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 leading-relaxed">
-                    {history.content}
-                  </p>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <button
-                    onClick={() => {
-                      navigator.clipboard.writeText(history.content)
-                    }}
-                    className="p-2 text-gray-400 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors border border-transparent hover:border-primary-100"
-                    title={t('common.copy', 'コピー')}
-                  >
-                    <Copy size={18} />
-                  </button>
-                  <button
-                    onClick={() => {
-                      if (confirm(t('history.deleteConfirm', 'この履歴を削除しますか？'))) {
-                        deleteHistory(history.id)
-                      }
-                    }}
-                    className="p-2 text-gray-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-lg transition-colors border border-transparent hover:border-rose-100"
-                    title={t('common.delete', '削除')}
-                  >
-                    <Trash2 size={18} />
-                  </button>
+                  <div className="flex flex-col gap-2">
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText(history.content)
+                      }}
+                      className="p-2 text-gray-400 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors border border-transparent hover:border-primary-100"
+                      title={t('common.copy', 'コピー')}
+                    >
+                      <Copy size={18} />
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (confirm(t('history.deleteConfirm', 'この履歴を削除しますか？'))) {
+                          deleteHistory(history.id)
+                        }
+                      }}
+                      className="p-2 text-gray-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-lg transition-colors border border-transparent hover:border-rose-100"
+                      title={t('common.delete', '削除')}
+                    >
+                      <Trash2 size={18} />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       )}
     </div>

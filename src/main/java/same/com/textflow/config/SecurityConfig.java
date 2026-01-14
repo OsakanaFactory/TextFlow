@@ -22,6 +22,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import same.com.textflow.security.JwtAuthenticationFilter;
+import same.com.textflow.security.oauth2.CustomOAuth2UserService;
+import same.com.textflow.security.oauth2.OAuth2AuthenticationFailureHandler;
+import same.com.textflow.security.oauth2.OAuth2AuthenticationSuccessHandler;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,6 +37,9 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final UserDetailsService userDetailsService;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+    private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
 
     @Value("${app.cors.allowed-origins}")
     private String allowedOrigins;
@@ -54,6 +60,10 @@ public class SecurityConfig {
                         .requestMatchers("/", "/static/**", "/favicon.ico").permitAll()
                         // All other requests require authentication
                         .anyRequest().authenticated())
+                .oauth2Login(oauth2 -> oauth2
+                        .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
+                        .successHandler(oAuth2AuthenticationSuccessHandler)
+                        .failureHandler(oAuth2AuthenticationFailureHandler))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

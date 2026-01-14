@@ -69,6 +69,7 @@ export function useLocalHistory() {
     deleteHistory,
     clearHistories,
     getHistoriesForImport,
+    getLatestHistory: () => histories[0],
     canSaveMore: histories.length < MAX_GUEST_HISTORIES,
   }
 }

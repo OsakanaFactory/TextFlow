@@ -6,6 +6,8 @@ interface User {
   username: string
   email: string
   plan: string
+  createdAt: string
+  lastLoginAt: string
 }
 
 interface AuthContextType {
@@ -14,7 +16,9 @@ interface AuthContextType {
   isAuthenticated: boolean
   isLoading: boolean
   login: (email: string, password: string) => Promise<void>
+  loginWithToken: (token: string) => Promise<void>
   register: (username: string, email: string, password: string) => Promise<void>
+  updateProfile: (username: string) => Promise<void>
   logout: () => void
 }
 
@@ -55,8 +59,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(user)
   }
 
+  const loginWithToken = async (accessToken: string) => {
+    localStorage.setItem('token', accessToken)
+    api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`
+    setToken(accessToken)
+    await fetchUser()
+  }
+
   const register = async (username: string, email: string, password: string) => {
     await api.post('/auth/register', { username, email, password })
+  }
+
+  const updateProfile = async (username: string) => {
+    await api.put('/users/me', { username })
+    await fetchUser()
   }
 
   const logout = () => {
@@ -74,7 +90,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isAuthenticated: !!user,
         isLoading,
         login,
+        loginWithToken,
         register,
+        updateProfile,
         logout,
       }}
     >

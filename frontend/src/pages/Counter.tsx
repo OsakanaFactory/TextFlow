@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useCharCount } from '../hooks/useCharCount'
 import { useAuth } from '../contexts/AuthContext'
-import { Copy, Save, Check, Type, AlignLeft, FileText, Hash, Eraser, Twitter, Instagram } from 'lucide-react'
+import { useLocalHistory } from '../hooks/useLocalHistory'
+import { Copy, Save, Check, Type, AlignLeft, FileText, Hash, Eraser, Twitter, Instagram, Upload } from 'lucide-react'
 import api from '../services/api'
 import AdLayout from '../components/layout/AdLayout'
 import AdBanner from '../components/common/AdBanner'
@@ -10,11 +11,35 @@ import AdBanner from '../components/common/AdBanner'
 export default function Counter() {
   const { t } = useTranslation()
   const { isAuthenticated } = useAuth()
+  const { saveHistory, getLatestHistory } = useLocalHistory()
   const [text, setText] = useState('')
   const [saved, setSaved] = useState(false)
   const [copied, setCopied] = useState(false)
   
   const stats = useCharCount(text)
+
+  // Auto-save logic
+  useEffect(() => {
+    if (!text.trim() || text.length < 5) return
+
+    const timer = setTimeout(async () => {
+      if (isAuthenticated) {
+        // We don't have an easy way to check the latest DB history here without another API call
+        // For now, only auto-save if authenticated but perhaps sparingly, 
+        // or just let the explicit save handle DB for now to avoid spam.
+        // Actually, F016 requirement says "Auto save when editing text".
+        // Let's implement it for DB too but maybe with a longer debounce or simple check.
+        handleSave()
+      } else {
+        const latest = getLatestHistory()
+        if (!latest || latest.content !== text) {
+          saveHistory(text)
+        }
+      }
+    }, 2000)
+
+    return () => clearTimeout(timer)
+  }, [text, isAuthenticated])
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(text)
@@ -35,6 +60,22 @@ export default function Counter() {
     } catch (error) {
       console.error('Failed to save history:', error)
     }
+  }
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      const content = event.target?.result as string
+      if (content) {
+        setText(content)
+      }
+    }
+    reader.readAsText(file)
+    // Reset input value to allow uploading the same file again
+    e.target.value = ''
   }
 
   const handleClear = () => {
@@ -69,6 +110,15 @@ export default function Counter() {
                  >
                      <Eraser size={20} />
                  </button>
+                 <label className="p-2 text-slate-500 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-xl transition-colors cursor-pointer" title="Upload File">
+                    <Upload size={20} />
+                    <input
+                        type="file"
+                        accept=".txt,.md"
+                        className="hidden"
+                        onChange={handleFileUpload}
+                     />
+                 </label>
                 <button
                     onClick={handleCopy}
                     className={`flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-medium transition-all ${
