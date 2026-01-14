@@ -11,7 +11,6 @@ import same.com.textflow.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
-import same.com.textflow.security.oauth2.CustomOAuth2User;
 
 @Service
 @RequiredArgsConstructor

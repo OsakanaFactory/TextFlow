@@ -12,8 +12,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import same.com.textflow.security.JwtTokenProvider;
 
 import java.io.IOException;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
 
 @Component
 @RequiredArgsConstructor
